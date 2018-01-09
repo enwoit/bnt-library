@@ -56,3 +56,16 @@ export const ADD_BOOK_QUERY = gql`
         }
     }
 `
+
+export const ADD_USER_QUERY = gql`
+    mutation createUser($name: String!, $facebookUrl: String!) {
+        createUser(
+            name: $name
+            facebookUrl: $facebookUrl
+        ), {
+        id,
+        name,
+        facebookUrl
+        }
+    }
+`

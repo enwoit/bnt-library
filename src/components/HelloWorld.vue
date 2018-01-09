@@ -31,13 +31,10 @@
         </v-card>
       </v-flex>
     </v-layout>
-
-    <add-book-dialog style="background-color: white" class="mt-5"></add-book-dialog>
   </div>
 </template>
 
 <script>
-  import AddBookDialog from './add-book-dialog.vue'
     import {
         ALL_BOOKS_QUERY,
         ALL_USERS_QUERY,
@@ -57,9 +54,6 @@
           users: [],
           user: {},
       }
-    },
-    components: {
-      AddBookDialog
     },
     methods: {
     },
@@ -98,18 +92,6 @@
 
 h1, h2 {
   font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-li {
-  width: 25%;
-  float: left;
-  display: block;
 }
 img {
   max-width: 150px;
