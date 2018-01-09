@@ -3066,7 +3066,7 @@ var SmartSubscription = function (_SmartApollo2) {
       args[_key3] = arguments[_key3];
     }
 
-    return _ret = (_temp = (_this6 = possibleConstructorReturn(this, (_ref = SmartSubscription.__proto__ || Object.getPrototypeOf(SmartSubscription)).call.apply(_ref, [this].concat(args))), _this6), _this6.type = 'subscription', _this6.vueApolloSpecialKeys = ['variables', 'result', 'error', 'throttle', 'debounce', 'linkedQuery'], _temp), possibleConstructorReturn(_this6, _ret);
+    return _ret = (_temp = (_this6 = babelHelpers.possibleConstructorReturn(this, (_ref = SmartSubscription.__proto__ || Object.getPrototypeOf(SmartSubscription)).call.apply(_ref, [this].concat(args))), _this6), _this6.type = 'subscription', _this6.vueApolloSpecialKeys = ['variables', 'result', 'error', 'throttle', 'debounce', 'linkedQuery'], _temp), babelHelpers.possibleConstructorReturn(_this6, _ret);
   }
 
   createClass(SmartSubscription, [{
