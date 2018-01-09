@@ -41,13 +41,13 @@ export const USER_QUERY = gql`
 `
 
 export const ADD_BOOK_QUERY = gql`
-    mutation addBook($title: String!, $author: String!, $imageUrl: String!, $holder: String) {
+    mutation addBook($title: String!, $author: String!, $imageUrl: String!, $holder: String, $ownerID: ID!) {
         createBook(
             title: $title
             author: $author
             imageUrl: $imageUrl
             holder: $holder
-            ownerId: "cjc4rkyb60zi40126c7g688f5"
+            ownerId: $ownerID
         ), {
         title,
         owner {

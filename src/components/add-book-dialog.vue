@@ -10,7 +10,13 @@
           <v-container grid-list-md>
             <v-layout wrap>
 
+              <v-flex xs12>
+                <v-text-field v-model="imageUrl" label="URL okładki książki (weź z Googla)" required></v-text-field>
+              </v-flex>
 
+              <v-flex xs12>
+                <img :src="imageUrl" style="max-width: 100px">
+              </v-flex>
 
                 <v-flex xs12>
                   <v-text-field v-model="title" label="Tytuł książki" required></v-text-field>
@@ -20,36 +26,26 @@
                   <v-text-field v-model="author" label="Autor" required></v-text-field>
                 </v-flex>
 
-                <v-flex xs12>
-                  <v-text-field v-model="imageUrl" label="URL okładki książki (weź z Googla)" required></v-text-field>
-                </v-flex>
-
               <v-flex xs12>
-                <img :src="imageUrl" style="max-width: 300px">
+                <label>Kto jest właścicielem</label>
+                <select v-model="ownerID">
+                  <option
+                          v-for="user in users"
+                          :key="user.id"
+                          :value="user.id">{{ user.name }}
+                  </option>
+                </select>
               </v-flex>
 
-              <!--<v-flex xs12>-->
-                <!--<v-select-->
-                        <!--v-bind:items="users.name"-->
-                        <!--v-model="a1"-->
-                        <!--label="Właściciel książki"-->
-                        <!--autocomplete-->
-                <!--&gt;</v-select>-->
-              <!--</v-flex>-->
-
-              <!--<v-flex xs12 sm9>-->
-                <!--<v-radio-group v-model="row" row>-->
-                  <!--<h3 class="mr-3">Czy książka jest wypożyczona?</h3>-->
-                  <!--<v-radio label="Tak" value="true" ></v-radio>-->
-                  <!--<v-radio label="Nie" value="false"></v-radio>-->
-                <!--</v-radio-group>-->
-              <!--</v-flex>-->
-
-              <v-flex xs12>
-                <v-text-field v-model="owner" label="Kto jest właścicielem ?" required></v-text-field>
+              <v-flex xs12 sm9>
+                <v-radio-group v-model="row" row>
+                  <h3 class="mr-3">Czy książka jest wypożyczona?</h3>
+                  <v-radio label="Tak" value="true" ></v-radio>
+                  <v-radio label="Nie" value="false"></v-radio>
+                </v-radio-group>
               </v-flex>
 
-              <v-flex xs12>
+              <v-flex xs12 v-if="row === 'true'">
                 <v-text-field v-model="holder" label="Kto wypożycza obecnie książkę?"></v-text-field>
               </v-flex>
 
@@ -67,10 +63,7 @@
 </template>
 
 <script>
-    import {
-        ADD_BOOK_QUERY,
-        ALL_USERS_QUERY
-    } from '../constants/graphql'
+    import { ADD_BOOK_QUERY, ALL_USERS_QUERY } from '../constants/graphql'
     import gql from 'graphql-tag'
 
     export default {
@@ -82,25 +75,9 @@
                 owner: '',
                 holder: '',
                 imageUrl: '',
-                a1: null,
+                ownerID: null,
                 row: null,
                 users:[],
-                states: [
-                    'Alabama','Alaska','American Samoa','Arizona',
-                    'Arkansas','California','Colorado','Connecticut',
-                    'Delaware','District of Columbia','Federated States of Micronesia',
-                    'Florida','Georgia','Guam','Hawaii','Idaho',
-                    'Illinois','Indiana','Iowa','Kansas','Kentucky',
-                    'Louisiana','Maine','Marshall Islands','Maryland',
-                    'Massachusetts','Michigan','Minnesota','Mississippi',
-                    'Missouri','Montana','Nebraska','Nevada',
-                    'New Hampshire','New Jersey','New Mexico','New York',
-                    'North Carolina','North Dakota','Northern Mariana Islands','Ohio',
-                    'Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico',
-                    'Rhode Island','South Carolina','South Dakota','Tennessee',
-                    'Texas','Utah','Vermont','Virgin Island','Virginia',
-                    'Washington','West Virginia','Wisconsin','Wyoming'
-                ]
             }
         },
         apollo: {
@@ -120,6 +97,7 @@
                         author: this.author,
                         imageUrl: this.imageUrl,
                         holder: this.holder,
+                        ownerID: this.ownerID,
                     },
                 }).then((data) => {
                     // Result
@@ -131,5 +109,13 @@
                 })
                 console.log('add book end');
             },
-        }    }
+        },
+    }
 </script>
+
+<style>
+  select {
+    padding:7px;
+    border:1px solid #000;
+  }
+</style>
