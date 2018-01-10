@@ -1,13 +1,20 @@
 <template>
-  <div class="">
+  <v-container>
+    <h1 class="mt-5 mb-3 text-xs-center">Biegowa Bilbioteka BNT</h1>
+    <p style="font-size: 18px" class="text-xs-center mb-5">
+      Książki dla biegaczy od biegaczy.<br><br>
+      Biegowa biblioteka BNT to miejsce, w którym możesz za darmo pożyczyć książkę o tematyce,
+      która Cię interesuje, a jeśli chcesz się również podzielić innymi pozycjami, to śmiało <a href="/#/dodaj-ksiazke">dodaj swoją książkę</a>
+      do biblioteczki BNT.
+    </p>
     <v-layout style="flex-wrap: wrap !important;">
-      <v-flex xs6 sm4 md2 v-for="book in books" :key="book.id" class="pa-2">
-        <v-card>
+      <v-flex xs6 sm4 md3 v-for="book in books" :key="book.id" class="pa-3">
+        <v-card :class="{card__info : book.holder}">
           <v-card-media
                   :data-id="book.id"
                   style="background-size: contain !important"
                   class="white--text"
-                  height="200px"
+                  height="220px"
                   :src="book.imageUrl"
           >
             <v-container fill-height fluid>
@@ -17,21 +24,21 @@
               </v-layout>
             </v-container>
           </v-card-media>
-          <v-card-title>
-            <div>
+          <v-card-title style="justify-content: center">
+            <div class="text-xs-center">
               <b>{{ book.title }}</b><br>
               <p>{{ book.author }}</p>
-              <p class="grey--text">
+              <span class="grey--text">
                 Własność: <a title="Kliknij i zarezerwuj przez Facebooka" :href="`https://www.facebook.com/messages/t/${book.owner.facebookUrl}`" target="_blank">
                 {{ book.owner.name }}
-              </a></p>
-              <p v-if="book.holder">Obecnie książka u: {{ book.holder }}</p>
+              </a></span><br>
+              <span v-if="book.holder">Obecnie książkę czyta: {{ book.holder }}</span>
             </div>
           </v-card-title>
         </v-card>
       </v-flex>
     </v-layout>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -88,6 +95,11 @@
 
   .card {
     background-color: #fff;
+  }
+
+  .card__info {
+    background-color: #e5ffd1;
+    box-shadow: 0 0 30px 2px rgba(0,0,0,0.26);
   }
 
 h1, h2 {

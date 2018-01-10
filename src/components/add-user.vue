@@ -1,9 +1,10 @@
 <template>
   <v-app>
   <v-layout>
-    <v-flex xs12 sm4 offset-sm4>
+    <v-flex xs12 sm6 offset-sm3>
+      <v-card class="pl-5 pr-5 pb-5 mt-5 pt-1">
       <v-form v-model="valid" class="mt-5" ref="form" lazy-validation>
-        <h1>Dodajesz osobę do listy właścicieli książek</h1>
+        <h1 class="mb-4">Dodaj osobę do listy książkożerców</h1>
     <v-text-field
             label="Imię i nazwisko"
             v-model="name"
@@ -15,7 +16,6 @@
             v-model="facebookUrl"
             :rules="facebookUrlRules"
     ></v-text-field>
-
     <v-btn
             @click="submit"
             :disabled="!valid"
@@ -24,6 +24,7 @@
     </v-btn>
     <v-btn @click="clear">Wyczyść</v-btn>
   </v-form>
+      </v-card>
     </v-flex>
   </v-layout>
   </v-app>
@@ -44,6 +45,7 @@
             facebookUrlRules: [
                 (v) => !!v || 'Podaj adres konta na facebooku'
             ],
+            checkbox: false
         }),
         methods: {
             submit () {

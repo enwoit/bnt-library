@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-layout row>
-      <v-flex xs12 sm6 offset-sm3>
-        <v-card>
+      <v-flex xs12 md6 offset-md3>
+        <v-card class="mt-5 pa-3">
           <v-card-title>
             <h1>Dodajesz nową książkę do Biblioteki BNT</h1>
           </v-card-title>
@@ -14,9 +14,9 @@
                   <v-text-field v-model="imageUrl" label="URL okładki książki" required></v-text-field>
                 </v-flex>
 
-                <v-flex xs12>
+                <div xs12>
                   <img :src="imageUrl" style="max-width: 250px">
-                </v-flex>
+                </div>
 
                 <v-flex xs12>
                   <v-text-field v-model="title" label="Tytuł książki" required></v-text-field>
@@ -27,14 +27,14 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <label>Wybierz właściciela książki z listy</label>
-                  <select v-model="ownerID">
-                    <option
-                            v-for="user in users"
-                            :key="user.id"
-                            :value="user.id">{{ user.name }}
-                    </option>
-                  </select>
+                  <v-select
+                          label="Wybierz właściciela książki"
+                          v-bind:items="filteredUsers"
+                          v-model="ownerID"
+                          item-text="text"
+                          item-value="value"
+                          max-height="auto"
+                  ></v-select>
 
                   <p><a href="/#/dodaj-osobe">lub dodaj nowego</a></p>
                 </v-flex>
@@ -48,7 +48,16 @@
                 </v-flex>
 
                 <v-flex xs12 v-if="row === 'true'">
-                  <v-text-field v-model="holder" label="Kto wypożycza obecnie książkę?"></v-text-field>
+                  <v-select
+                          label="Kto wypożycza obecnie książkę?"
+                          v-bind:items="filteredUsers"
+                          v-model="holder"
+                          item-text="text"
+                          item-value="value"
+                          max-height="auto"
+                  ></v-select>
+
+                  <p><a href="/#/dodaj-osobe">Nie ma tej osoby na liście? Kliknij tutaj</a></p>
                 </v-flex>
 
               </v-layout>
@@ -56,8 +65,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="red" flat @click.native="dialog = false">Zamknij</v-btn>
-            <v-btn color="red" flat @click="addBook">Zapisz</v-btn>
+            <v-btn color="red" flat @click="addBook">Dodaj książkę</v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -78,10 +86,16 @@
                 owner: '',
                 holder: '',
                 imageUrl: '',
-                select: null,
                 ownerID: null,
                 row: null,
                 users:[],
+                select: null,
+                items: [
+                    'Item 1',
+                    'Item 2',
+                    'Item 3',
+                    'Item 4'
+                ],
             }
         },
         apollo: {
@@ -91,6 +105,14 @@
                     this.users = Object.assign({}, data.allUsers)
                 }
             },
+        },
+        computed: {
+          filteredUsers() {
+              return Object.entries(this.users).map(item => {
+                  return {text: item[1].name, value: item[1].id}
+              });
+//              return this.users.map(arr => { return { value: arr[0], text: arr[1] } })
+          }
         },
         methods: {
             addBook() {
