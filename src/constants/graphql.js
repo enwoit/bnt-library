@@ -40,6 +40,21 @@ export const USER_QUERY = gql`
     }
 `
 
+export const GET_BOOK_QUERY = gql`
+    query getBook($id: ID!) {
+        Book(id: $id) {
+            id
+            title
+            author
+            holder
+            imageUrl
+            owner {
+                id
+            }
+        }
+    }
+`
+
 export const ADD_BOOK_QUERY = gql`
     mutation addBook($title: String!, $author: String!, $imageUrl: String!, $holder: String, $ownerID: ID!) {
         createBook(
@@ -54,6 +69,24 @@ export const ADD_BOOK_QUERY = gql`
             id
         }
         }
+    }
+`
+
+export const EDIT_BOOK_QUERY = gql`
+    mutation editBook($id: ID!, $title: String!, $author: String!, $imageUrl: String!, $holder: String, $ownerID: ID!) {
+        updateBook(
+            id: $id
+            title: $title
+            author: $author
+            imageUrl: $imageUrl
+            holder: $holder
+            ownerId: $ownerID
+        ), {
+        title,
+        owner {
+            id
+        }
+    }
     }
 `
 

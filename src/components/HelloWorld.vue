@@ -8,7 +8,7 @@
       do biblioteczki BNT.
     </p>
     <v-layout style="flex-wrap: wrap !important;">
-      <v-flex xs6 sm4 md3 v-for="book in books" :key="book.id" class="pa-3">
+      <v-flex xs6 sm4 md3 v-if="books" v-for="book in books" :key="book.id" class="pa-3">
         <v-card :class="{card__info : book.holder}">
           <v-card-media
                   :data-id="book.id"
@@ -36,6 +36,9 @@
             </div>
           </v-card-title>
         </v-card>
+      </v-flex>
+      <v-flex xs12 class="text-xs-center" else>
+        <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="purple"></v-progress-circular>
       </v-flex>
     </v-layout>
   </v-container>
