@@ -7,40 +7,25 @@
       która Cię interesuje, a jeśli chcesz się również podzielić innymi pozycjami, to śmiało <a href="/#/dodaj-ksiazke">dodaj swoją książkę</a>
       do biblioteczki BNT.
     </p>
-    <v-layout style="flex-wrap: wrap !important;">
-      <v-flex xs6 sm4 md3 v-if="books" v-for="book in books" :key="book.id" class="pa-3">
-        <v-card :class="{card__info : book.holder}">
-          <v-card-media
-                  :data-id="book.id"
-                  style="background-size: contain !important"
-                  class="white--text"
-                  height="220px"
-                  :src="book.imageUrl"
-          >
-            <v-container fill-height fluid>
-              <v-layout fill-height>
-                <v-flex xs12 align-end flexbox>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </v-card-media>
-          <v-card-title style="justify-content: center">
-            <div class="text-xs-center">
-              <b>{{ book.title }}</b><br>
-              <p>{{ book.author }}</p>
-              <span class="grey--text">
-                Własność: <a title="Kliknij i zarezerwuj przez Facebooka" :href="`https://www.facebook.com/messages/t/${book.owner.facebookUrl}`" target="_blank">
-                {{ book.owner.name }}
-              </a></span><br>
-              <span v-if="book.holder">Obecnie książkę czyta: {{ book.holder }}</span>
-            </div>
-          </v-card-title>
-        </v-card>
-      </v-flex>
-      <v-flex xs12 class="text-xs-center" else>
+    <div class="grid">
+      <div v-if="books" v-for="(book, index) in books" :key="book.id" :class="{card__info : book.holder}">
+        <img :src="book.imageUrl">
+        <div style="display: grid;">
+          <div class="text-xs-center">
+            <b>{{ book.title }}</b><br>
+            <p>{{ book.author }}</p>
+            <span class="grey--text">
+              Własność: <a title="Kliknij i zarezerwuj przez Facebooka" :href="`https://www.facebook.com/messages/t/${book.owner.facebookUrl}`" target="_blank">
+              {{ book.owner.name }}
+            </a></span><br>
+            <span v-if="book.holder">Obecnie książkę czyta: {{ book.holder }}</span>
+          </div>
+        </div>
+      </div>
+      <v-flex xs12 class="text-xs-center" v-else>
         <v-progress-circular indeterminate v-bind:size="70" v-bind:width="7" color="purple"></v-progress-circular>
       </v-flex>
-    </v-layout>
+    </div>
   </v-container>
 </template>
 
@@ -58,8 +43,6 @@
     data () {
       return {
           msg: 'Welcome to Your Vue.js App',
-          hello: '1',
-          loading: 0,
           books: [],
           users: [],
           user: {},
@@ -92,6 +75,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+  .grid {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  }
   .card__media__background {
     background-size: contain !important;
   }
