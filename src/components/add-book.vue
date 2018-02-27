@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <v-layout row>
       <v-flex xs12 md6 offset-md3>
         <v-card class="mt-5 pa-3">
           <v-card-title>
@@ -36,7 +35,7 @@
                           max-height="auto"
                   ></v-select>
 
-                  <p><a href="/#/dodaj-osobe">lub dodaj nowego</a></p>
+                  <v-btn flat @click.native="dialogAddUser = true">lub dodaj nowego</v-btn>
                 </v-flex>
 
                 <v-flex xs12 sm9>
@@ -57,7 +56,7 @@
                           max-height="auto"
                   ></v-select>
 
-                  <p><a href="/#/dodaj-osobe">Nie ma tej osoby na liście? Kliknij tutaj</a></p>
+                  <v-btn flat @click.native="dialogAddUser = true">Nie ma na liście? Dodaj nowego!</v-btn>
                 </v-flex>
 
               </v-layout>
@@ -69,18 +68,44 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-    </v-layout>
+
+    <!--DODAJ Usera-->
+    <v-dialog
+            v-model="dialogAddUser"
+            transition="dialog-bottom-transition"
+            :overlay="true"
+            :scrollable="false"
+            max-width="1200px"
+    >
+      <v-card tile>
+        <v-toolbar card dark color="blue">
+          <v-spacer>
+          </v-spacer>
+          <v-toolbar-items>
+            <v-btn dark flat @click.native="dialogAddUser = false">Zamknij</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-card-text>
+          <add-user></add-user>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
   </v-app>
 </template>
 
 <script>
     import { ADD_BOOK_QUERY, ALL_USERS_QUERY } from '../constants/graphql'
     import gql from 'graphql-tag'
+    import AddUser from './add-user.vue'
 
     export default {
+        components: {
+            AddUser
+        },
         data () {
             return {
-                dialog: false,
+                dialogAddUser: false,
                 title: '',
                 author: '',
                 owner: '',
